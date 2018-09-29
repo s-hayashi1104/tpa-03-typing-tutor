@@ -34,11 +34,23 @@ class TypingTutorView {
     // when you type a space
     evt.target.blur();
     this.clearKeystrokes();
+    this.totalLength = 0;
+    this.keyCorrect = 0;
+    this.keyInCorrect = 0;
     this.callbacks.startRound();
   }
 
   clearKeystrokes() {
     removeChildNodes(this.learnerKeystrokesEl);
+  }
+
+  announceResults() {
+    this.clearKeystrokes();
+    const contaier = document.querySelector('.learner-keystrokes');
+    const result = document.createElement('div');
+    const content = document.createTextNode(`Your results : ${Math.floor((this.keyCorrect / this.totalLength) * 100)}%`);
+    result.appendChild(content);
+    contaier.appendChild(result);
   }
 
   handleDocumentKeyUp(evt) {
@@ -60,11 +72,10 @@ class TypingTutorView {
     } else {
       this.keyInCorrect += 1;
     }
-    console.log(`correct ${this.keyCorrect}`);
-    console.log(`incorrect ${this.keyInCorrect}`);
-    console.log(this.totalLength);
-    console.log(Math.ceil((this.keyCorrect / this.totalLength) * 100));
     this.learnerKeystrokesEl.appendChild(spanEl);
+    if (this.totalLength === this.keyCorrect + this.keyInCorrect) {
+      this.announceResults();
+    }
   }
 }
 
