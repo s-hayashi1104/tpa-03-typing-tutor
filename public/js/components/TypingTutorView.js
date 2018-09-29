@@ -6,7 +6,7 @@ class TypingTutorView {
     this.callbacks = {};
     this.totalLength = 0;
     this.keyCorrect = 0;
-    this.keyIncorrect = 0;
+    this.keyInCorrect = 0;
   }
 
   registerStartRoundCallback(callback) {
@@ -56,12 +56,12 @@ class TypingTutorView {
     spanEl.innerText = typedChar;
     spanEl.className = (typedChar === targetChar) ? 'key-correct' : 'key-incorrect';
     if (typedChar === targetChar) {
-      console.log(this.keyCorrect);
       this.keyCorrect += 1;
     } else {
-      console.log(this.keyInCorrect);
-      this.keyIncorrect += 1;
+      this.keyInCorrect += 1;
     }
+    console.log(`correct ${this.keyCorrect}`);
+    console.log(`incorrect ${this.keyInCorrect}`);
     console.log(this.totalLength);
     console.log(Math.ceil((this.keyCorrect / this.totalLength) * 100));
     this.learnerKeystrokesEl.appendChild(spanEl);
