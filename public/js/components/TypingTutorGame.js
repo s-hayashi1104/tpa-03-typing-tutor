@@ -27,9 +27,6 @@ class TypingTutorGame {
   }
 
   handleKeyStroke(key) {
-    console.log(this.keyCorrect);
-    console.log(this.keyInCorrect);
-    console.log(this.targetText.length);
     if (this.targetText.length - 1 === this.keyCorrect + this.keyInCorrect) {
       this.isRoundInProgress = false;
       this.view.announceResults(this.keyCorrect, this.targetText.length);
