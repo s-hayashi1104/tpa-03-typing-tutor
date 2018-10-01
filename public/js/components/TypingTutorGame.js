@@ -6,6 +6,8 @@ class TypingTutorGame {
     this.isRoundInProgress = false;
     this.currentStrokeCount = -1;
     this.targetText = null;
+    this.keyCorrect = 0;
+    this.keyInCorrect = 0;
   }
 
   init() {
@@ -18,13 +20,28 @@ class TypingTutorGame {
   startRound() {
     this.isRoundInProgress = true;
     this.currentStrokeCount = -1;
+    this.keyCorrect = 0;
+    this.keyInCorrect = 0;
+    this.targetText = null;
     this.initTargetText();
   }
 
   handleKeyStroke(key) {
+    console.log(this.keyCorrect);
+    console.log(this.keyInCorrect);
+    console.log(this.targetText.length);
+    if (this.targetText.length - 1 === this.keyCorrect + this.keyInCorrect) {
+      this.isRoundInProgress = false;
+      this.view.announceResults(this.keyCorrect, this.targetText.length);
+    }
     if (!this.isRoundInProgress) return;
     this.currentStrokeCount += 1;
     const targetChar = this.targetText[this.currentStrokeCount];
+    if (key === targetChar) {
+      this.keyCorrect += 1;
+    } else {
+      this.keyInCorrect += 1;
+    }
     this.view.renderKeystroke(key, targetChar);
   }
 

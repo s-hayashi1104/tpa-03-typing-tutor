@@ -4,9 +4,6 @@ class TypingTutorView {
   constructor() {
     this.learnerKeystrokesEl = null;
     this.callbacks = {};
-    this.totalLength = 0;
-    this.keyCorrect = 0;
-    this.keyInCorrect = 0;
   }
 
   registerStartRoundCallback(callback) {
@@ -34,9 +31,6 @@ class TypingTutorView {
     // when you type a space
     evt.target.blur();
     this.clearKeystrokes();
-    this.totalLength = 0;
-    this.keyCorrect = 0;
-    this.keyInCorrect = 0;
     this.callbacks.startRound();
   }
 
@@ -44,11 +38,11 @@ class TypingTutorView {
     removeChildNodes(this.learnerKeystrokesEl);
   }
 
-  announceResults() {
+  announceResults(keyCorrect, totalLength) {
     this.clearKeystrokes();
     const contaier = document.querySelector('.learner-keystrokes');
     const result = document.createElement('div');
-    const content = document.createTextNode(`Your results : ${Math.floor((this.keyCorrect / this.totalLength) * 100)}%`);
+    const content = document.createTextNode(`Your results : ${Math.floor((keyCorrect / totalLength) * 100)}%`);
     result.appendChild(content);
     contaier.appendChild(result);
   }
@@ -67,15 +61,7 @@ class TypingTutorView {
     const spanEl = document.createElement('SPAN');
     spanEl.innerText = typedChar;
     spanEl.className = (typedChar === targetChar) ? 'key-correct' : 'key-incorrect';
-    if (typedChar === targetChar) {
-      this.keyCorrect += 1;
-    } else {
-      this.keyInCorrect += 1;
-    }
     this.learnerKeystrokesEl.appendChild(spanEl);
-    if (this.totalLength === this.keyCorrect + this.keyInCorrect) {
-      this.announceResults();
-    }
   }
 }
 
