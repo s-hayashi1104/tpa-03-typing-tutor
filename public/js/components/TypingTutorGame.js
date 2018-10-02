@@ -27,10 +27,6 @@ class TypingTutorGame {
   }
 
   handleKeyStroke(key) {
-    if (this.targetText.length - 1 === this.keyCorrect + this.keyInCorrect) {
-      this.isRoundInProgress = false;
-      this.view.announceResults(this.keyCorrect, this.targetText.length);
-    }
     if (!this.isRoundInProgress) return;
     this.currentStrokeCount += 1;
     const targetChar = this.targetText[this.currentStrokeCount];
@@ -40,6 +36,10 @@ class TypingTutorGame {
       this.keyInCorrect += 1;
     }
     this.view.renderKeystroke(key, targetChar);
+    if (this.targetText.length === this.keyCorrect + this.keyInCorrect) {
+      this.isRoundInProgress = false;
+      this.view.announceResults(this.keyCorrect, this.targetText.length);
+    }
   }
 
   initTargetText() {
