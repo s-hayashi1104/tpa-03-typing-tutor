@@ -39,12 +39,11 @@ class TypingTutorView {
   }
 
   announceResults(keyCorrect, totalLength) {
-    this.clearKeystrokes();
-    const contaier = document.querySelector('.learner-keystrokes');
+    const container = document.querySelector('.learner-keystrokes');
     const result = document.createElement('div');
     const content = document.createTextNode(`${keyCorrect} out of ${totalLength} answers were correct Your results : ${Math.floor((keyCorrect / totalLength) * 100)}%`);
     result.appendChild(content);
-    contaier.appendChild(result);
+    container.appendChild(result);
   }
 
   handleDocumentKeyUp(evt) {
