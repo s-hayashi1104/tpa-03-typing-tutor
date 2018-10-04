@@ -38,12 +38,21 @@ class TypingTutorView {
     removeChildNodes(this.learnerKeystrokesEl);
   }
 
+  announceResults(keyCorrect, totalLength) {
+    const container = document.querySelector('.learner-keystrokes');
+    const result = document.createElement('div');
+    const content = document.createTextNode(`${keyCorrect} out of ${totalLength} answers were correct Your results : ${Math.floor((keyCorrect / totalLength) * 100)}%`);
+    result.appendChild(content);
+    container.appendChild(result);
+  }
+
   handleDocumentKeyUp(evt) {
     if (evt.key.length !== 1) return;
     this.callbacks.handleKeystroke(evt.key);
   }
 
   renderTargetText(text) {
+    this.totalLength = text.length;
     document.querySelector('.target-text').innerText = text;
   }
 
